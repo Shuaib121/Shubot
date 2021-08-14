@@ -46,7 +46,7 @@
 
             var profile = JsonConvert.DeserializeObject<TwitterProfileModel>(response.Content);
 
-            if (profile.data.id == null)
+            if (profile.data == null)
             {
                 await ReplyAsync(Format.Bold($"Twitter user {user} does not exist"));
                 return;
