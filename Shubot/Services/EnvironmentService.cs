@@ -6,10 +6,13 @@
 
     public class EnvironmentService : IEnvironmentService
     {
+        string[] tokens = File.ReadAllLines(@"C:\Users\user-pc\source\repos\Shubot\Shubot\Tokens\API_TOKENS.txt");
+
         public void SetEnvironmentVariables()
         {
-            Environment.SetEnvironmentVariable(EnvironmentConstants.TOKEN, "ODcyOTAyOTA0MTA3OTAwOTY5.YQwoLg.wVZp3fo_qQJqEtITPDhq4rrLADU");
-            Environment.SetEnvironmentVariable(EnvironmentConstants.TWITTER_TOKEN, "Bearer AAAAAAAAAAAAAAAAAAAAAN8KSgEAAAAA0%2BrpCmSm0Ev5XONFXs%2F2rn8ghjk%3DV9FtAdE4N2XTytBHJMuVgnh36QJBxb1PNXfJbbr4LGPyEYT4Kf");
+            Environment.SetEnvironmentVariable(EnvironmentConstants.TOKEN, tokens[0]);
+            Environment.SetEnvironmentVariable(EnvironmentConstants.TWITTER_TOKEN, tokens[1]);
+            Environment.SetEnvironmentVariable(EnvironmentConstants.RAPID_API_TOKEN, tokens[2]);
         }
     }
 }

@@ -17,7 +17,7 @@
     [Group("twitter")]
     public class TwitterModule : ModuleBase<SocketCommandContext>
     {
-        [Command("recent")]
+        /*[Command("recent")]
 		public async Task UserTweetsAsync(string user = null)
 		{
             var url = $"https://api.twitter.com/2/tweets/search/recent?query=from:{user}";
@@ -35,7 +35,7 @@
             }
 
             await ReplyAsync(reply);
-		}
+		}*/
 
         [Command("profile")]
         public async Task UserProfileAsync(string user = null)
@@ -62,7 +62,8 @@
                  .AddField("Name", profile.data.name)
                  .AddField("Date of Account Creation", profile.data.created_at.Date.ToShortDateString())
                  .WithThumbnailUrl(profile.data.profile_image_url)
-                 .WithUrl($"https://twitter.com/{user}");
+                 .WithUrl($"https://twitter.com/{user}")
+                 .WithFooter("Requested by " + Context.User.Username, Context.User.GetAvatarUrl()); ;
 
             if (!string.IsNullOrEmpty(profile.data.description)) embed.AddField("Description", profile.data.description);
             embed.AddField("Following", (followingCount > 999) ? followingCount.ToString("#,#", CultureInfo.InvariantCulture) : followingCount);

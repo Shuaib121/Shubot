@@ -14,9 +14,8 @@
         private readonly IEnvironmentService environmentService;
         private readonly ILoggingService loggingService;
 
-        private CommandService commandService = new CommandService();
-        private DiscordSocketClient discordSocketClient = new DiscordSocketClient();
-        private CommandHandler commandHandler;
+        private CommandService commandService = new CommandService(new CommandServiceConfig { DefaultRunMode = RunMode.Async });
+        private DiscordSocketClient discordSocketClient = new DiscordSocketClient(new DiscordSocketConfig { AlwaysDownloadUsers = true });
 
         public Shubot(IEnvironmentService environmentService, ILoggingService loggingService)
         {

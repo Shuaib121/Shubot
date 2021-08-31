@@ -23,18 +23,47 @@
 			userInfo.ActiveClients.ToList().ForEach(_ => activeClients+= $"{_}, ");
 			userInfo.Activities.ToList().ForEach(_ => activities += $"{_.Name} ");
 
-			activeClients = activeClients.Remove(activeClients.Length - 2);
-			if (userInfo.Activity != null) { currentActivity = userInfo.Activity.Name; }
+
+            if (!String.IsNullOrEmpty(activeClients)) { activeClients = activeClients.Remove(activeClients.Length - 2); }
+			if (userInfo.Activities.Count > 0) { currentActivity = userInfo.Activities[0].Name; }
 
 			var embed = new EmbedBuilder()
-			     .WithTitle($"{user.Username}'s Discord Information")
+			     .WithTitle($"{userInfo.Username}'s Discord Information")
 				 .WithColor(Color.Blue)
 				 .AddField("Tag", $"{userInfo.Username}#{userInfo.Discriminator}")
 				 .AddField("Active Clients", $"{IsDataAvailable(activeClients)}")
 				 .AddField("Activities", $"{IsDataAvailable(activities)}")
 				 .AddField("Current Activity", $"{IsDataAvailable(currentActivity)}")
 				 .AddField("Date of Account Creation", $"{userInfo.CreatedAt.DateTime}")
-				 .WithThumbnailUrl(userInfo.GetAvatarUrl());
+				 .WithThumbnailUrl(userInfo.GetAvatarUrl())
+				 .WithFooter("Requested by " + Context.User.Username, Context.User.GetAvatarUrl()); ;
+
+			await ReplyAsync(embed: embed.Build());
+		}
+
+		[Command("selection")]
+		public async Task UserInfoSlectionAsync(SocketUser user = null)
+		{
+			string activeClients = null, activities = null, currentActivity = null;
+			var userInfo = user ?? Context.Client.CurrentUser;
+
+			userInfo.ActiveClients.ToList().ForEach(_ => activeClients += $"{_}, ");
+			userInfo.Activities.ToList().ForEach(_ => activities += $"{_.Name} ");
+
+
+			if (!String.IsNullOrEmpty(activeClients)) { activeClients = activeClients.Remove(activeClients.Length - 2); }
+			if (userInfo.Activities.Count > 0) { currentActivity = userInfo.Activities[0].Name; }
+
+			var embed = new EmbedBuilder()
+				 .WithTitle($"{userInfo.Username}'s Discord Information")
+				 .WithColor(Color.Blue)
+				 .AddField("Tag", $"{userInfo.Username}#{userInfo.Discriminator}")
+				 .AddField("Active Clients", $"{IsDataAvailable(activeClients)}")
+				 .AddField("Activities", $"{IsDataAvailable(activities)}")
+				 .AddField("Current Activity", $"{IsDataAvailable(currentActivity)}")
+				 .AddField("Date of Account Creation", $"{userInfo.CreatedAt.DateTime}")
+				 .WithThumbnailUrl(userInfo.GetAvatarUrl())
+				 .WithFooter("Requested by " + Context.User.Username, Context.User.GetAvatarUrl()); ;
 
 			await ReplyAsync(embed: embed.Build());
 		}
